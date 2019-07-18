@@ -34,7 +34,7 @@ display: inline-block;
     background-color: aqua;
     margin-left: 10%;
     margin-top: 10%;
-    
+
 }
 #gameContainer{
     height: 100%;
@@ -58,34 +58,10 @@ display: inline-block;
   font-size: 48px;
 
 }
-.monster1{
+.monster{
     border: 4px solid black;
     height: 23%;
-   background-image: url("http://dogclubforever.com/legologreviews/images/darkonis.jpg");
    background-size:cover;
-
-
-
-}
-.monster2{
-    border: 4px solid black;
-    height: 25%;
-    background-image:  url("https://voiceofe.com/wp-content/uploads/2016/06/1-KOT-Gigazaur_with_bkgd.jpg ");
-    background-size:cover;
-
-}
-.monster3{
-    border: 4px solid black;
-    height: 25%;
-    background-image:  url("https://cf.geekdo-images.com/medium/img/iYhYSsT1v2mu1VcGclnxxC0IS3g=/fit-in/500x500/filters:no_upscale()/pic3043736.jpg");
-    background-size:cover;
-}
-
-.monster4{
-border: 4px solid black;
-    height: 24%;
-    background-image:  url("https://cdna.artstation.com/p/assets/images/images/002/767/358/smaller_square/regis-torres-kot2-alienoid-bg.jpg?1465477584 ");
-    background-size: 90%;
 }
 .stats{
     background-color: beige;
@@ -113,3 +89,19 @@ border: 4px solid black;
     background-size: contain;
     background-repeat: no-repeat;
   }
+.takingDamage{
+  animation-name: receiveAttack;
+  animation-duration: .1s;
+  animation-iteration-count: 4;
+}
+
+@keyframes receiveAttack{
+  from {
+    transform: rotateZ(-15deg);
+    filter: hue-rotate(90deg);
+  }
+  to: {
+    transform: rotateZ(15deg);
+    filter: hue-rotate(180deg);
+  }
+}

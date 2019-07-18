@@ -1,8 +1,4 @@
 $(document).ready(initializeApp);
-// var player1;
-// var player2;
-// var player3;
-// var player4;
 var game = null;
 function initializeApp() {
   game = new KingOfTokyo();
@@ -18,31 +14,28 @@ class KingOfTokyo {
       new Monsters("CYBERKITTY", 'images/cyberkitty.jpg', this.handleMonsterDeath),
       new Monsters("ALIENOID", 'images/alienoid.jpg', this.handleMonsterDeath)
     ]
-      //this.player1,this.player2,this.player3,this.player4];
     this.monstersArray = [".monster1", ".monster2", ".monster3", ".monster4"];
     this.rollDice1 = [1, 2, 3, "Heart", "Attack"];
-    //this.heart = null;
-    //this.stars = null;
-    //this.attack = null;
+    $(".close").on("click",this.resetGame);
     this.addMonstersCounter =0;
     this.currentMonsterCounter=0;
-    // this.currentPlayer1 = true;
-
     this.rollDice = this.rollDice.bind(this);
     this.startGame = this.startGame.bind(this);
     this.moveMonstersToTokyo = this.moveMonstersToTokyo.bind(this);
     this.monstersStatRender = this.monstersStatRender.bind(this);
+    this.resetGame = this.resetGame.bind(this);
     $(".start").on("click",this.startGame);
     $(".roll").on("click",this.rollDice);
 
   }
-  handleMonsterDeath( monster ){
+  resetGame(){
+    $("#playerContainer").empty();
+    $(".start").css("visibility", "visible");
+    $(".modal-content").css("visibility","hidden");
+    $(".modal").css("display","none");
+  }
 
-    // for( var monsterIndex = 0; = 0; monsterIndex <= this.playerArray.length; monsterIndex++){
-    //   if( this.playerArray[currentIndex] === monster){
-    //     break;
-    //   }
-    // }
+  handleMonsterDeath( monster ){
     var monsterIndex = this.playerArray.indexOf(monster);
     if(monsterIndex===-1){
       console.error('could not find monster');
@@ -59,6 +52,7 @@ class KingOfTokyo {
     this.gotoNextMonster();
     this.moveMonstersToTokyo();
   }
+
   handleDiceResult(result){
     switch(result){
       case 1:
@@ -80,11 +74,13 @@ class KingOfTokyo {
         }, 500)
     }
   }
+
   playSound( file ){
     var player = new Audio(file);
     player.volume = this.volumeLevel;
     player.play();
   }
+
   damageMonsters( damageAmount, exemptMonster ){
     var monstersToDamage = this.playerArray.slice();
     monstersToDamage.splice( monstersToDamage.indexOf( exemptMonster), 1);
@@ -93,6 +89,7 @@ class KingOfTokyo {
       currentMonster.removeHeart( damageAmount );
     }
   }
+
   startGame() {
     $(".start").css("visibility","hidden");
     for( var monsterIndex = 0; monsterIndex < this.playerArray.length; monsterIndex++){
@@ -101,14 +98,14 @@ class KingOfTokyo {
       this.playerArray[monsterIndex].update()
     }
     $(".tokyo").text(this.monstersArray[0]);
-
   }
+
   moveMonstersToTokyo() {
     this.addMonstersCounter++
     if (this.addMonstersCounter === this.playerArray.length) { this.addMonstersCounter = 0 };
     $(".tokyo").text(this.monstersArray[this.addMonstersCounter]);
-    //debugger;
   }
+
   gotoNextMonster(){
     this.currentMonsterCounter++;
     if(this.currentMonsterCounter===this.playerArray.length){
@@ -118,6 +115,7 @@ class KingOfTokyo {
       alert('last monster standing');
     }
   }
+
   monstersStatRender(){
     if (this.currentMonsterCounter === this.players.length) { this.currentMonsterCounter = 0 };
     var currentMonster = this.playerArray[this.currentMonsterCounter]
@@ -126,6 +124,7 @@ class KingOfTokyo {
     return;
   }
 }
+
 class Monsters {
 
   constructor(name, image, deathCallback) {
@@ -142,73 +141,58 @@ class Monsters {
     this.removeHeart=this.removeHeart.bind(this);
     this.update = this.update.bind(this);
     this.checkForDeath=this.checkForDeath.bind(this);
-
     this.domElements = {
       container: null,
       hearts: null,
       stars: null,
       name: null
     }
-    // $(".roll").on("click", this.monsterDies);
   }
 
 
   addHeart(amount) {
-  //  debugger;
-    //console.log(event.target.firstElementChild.innerHTML);
     this.heart += amount;
     if(this.heart > this.maxHearts){
       this.heart = this.maxHearts;
     }
     this.update();
-    //this.render();
   }
 
   removeHeart(amount) {
-    //debugger;
     this.heart-=amount;
     this.domElements.container.addClass('takingDamage');
     this.checkForDeath();
     this.update();
-    //this.render();
   }
 
   addStars( amount ) {
-    // debugger;
-    console.log('addStars ran');
     this.stars += amount
     this.update();
-
   }
+
   checkForDeath() {
     if (this.heart <= 0 ) {
-      console.log("die")
       this.domElements.name.text(this.monstersName + " (DEAD )");
-
       this.callThisFunctionWhenIDie(this);
-
     }
   }
 
   update() {
-    //debugger;
-    //debugger;
     this.domElements.hearts.text(this.heart);
     this.domElements.stars.text(this.stars);
 
     if(this.stars > 5){
       $(".modal-content").css("visibility", "visible");
       $(".modal").css("display", "block");
+      for(var i =0; i<=3; i++){
+        game.playerArray[i].stars = 0;
+      }
+      for (var j = 0; j <= 3; j++) {
+        game.playerArray[j].heart = 5;
+      }
     }
   }
-/*
-    <div class="monster1"><span class="name">DRAKONIS</span>
-      <div class="stats">
-        <div class="heart"></div>
-        <div class="stars"></div>
-      </div>
-    </div>
-    */
+
   render(){
     var container = $("<div>").addClass('monster').css('background-image', 'url(' + this.image + ')');
     var nameContainer= $("<span>").addClass('name').text(this.monstersName);
@@ -225,7 +209,5 @@ class Monsters {
     }
     return this.domElements.container;
   }
-
-
 
 }

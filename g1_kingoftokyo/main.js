@@ -5,19 +5,22 @@ var player3;
 var player4;
 
 function initializeApp() {
+
   new KingOfTokyo();
   new Monsters();
+
 
 }
 
 class KingOfTokyo {
   constructor() {
-    //debugger;
-    this.player1 = new Monsters("DRAKONIS");
-    this.player2 = new Monsters("GIGAZAUR");
-    this.player3 = new Monsters("CYBERKITTY");
-    this.player4 = new Monsters("ALIENOID");
-    this.playerArray=[this.player1,this.player2,this.player3,this.player4];
+    this.playerArray=[
+      new Monsters("DRAKONIS"),
+      new Monsters("GIGAZAUR"),
+      new Monsters("CYBERKITTY"),
+      new Monsters("ALIENOID")
+    ]
+      //this.player1,this.player2,this.player3,this.player4];
     this.monstersArray = [".monster1", ".monster2", ".monster3", ".monster4"];
     this.rollDice1 = [1, 2, 3, "Heart","Attack"];
     //this.heart = null;
@@ -40,8 +43,10 @@ class KingOfTokyo {
   }
 
   rollDice() {
+    debugger;
     var randomNum = Math.floor(Math.random()*this.rollDice1.length);
-    $(".dicevalue").text(this.rollDice1[randomNum]);
+    this.diceValue = $(".dicevalue").text(this.rollDice1[randomNum]);
+    $(".dicevalue").append(this.diceValue);
   }
   addMonsters() {
     $(".start").css("visibility","hidden");
@@ -51,17 +56,16 @@ class KingOfTokyo {
   moveMonstersToTokyo() {
     this.addMonstersCounter++
     if (this.addMonstersCounter > 3) { this.addMonstersCounter = 0 };
-    $(".tokyo").text(this.monstersArray[this.addMonstersCounter])
+    $(".tokyo").text(this.monstersArray[this.addMonstersCounter]);
     //debugger;
-}
-
-monstersStatRender(){
-  if (this.currentMonsterCounter > 3) { this.currentMonsterCounter = 0 };
-  var currentMonster = this.playerArray[this.currentMonsterCounter]
-  $(this.monstersArray[this.addMonstersCounter]).append(currentMonster.render(`${this.monstersArray[this.currentMonsterCounter]} div:nth-child(2)`));
-  this.currentMonsterCounter++;
-  return;
-}
+  }
+  monstersStatRender(){
+    if (this.currentMonsterCounter > 3) { this.currentMonsterCounter = 0 };
+    var currentMonster = this.playerArray[this.currentMonsterCounter]
+    $(this.monstersArray[this.addMonstersCounter]).append(currentMonster.render(`${this.monstersArray[this.currentMonsterCounter]} div:nth-child(2)`));
+    this.currentMonsterCounter++;
+    return;
+  }
 }
 class Monsters {
 
@@ -83,17 +87,19 @@ class Monsters {
   }
 
   addHeart() {
-   //debugger;
-    var heart1 = event.target.firstElementChild.innerText;
-    if(heart1 === "Heart"){
-      this.heart++;
+  //  debugger;
+    //console.log(event.target.firstElementChild.innerHTML);
+    var heart1 = event.target.firstElementChild.innerHTML;
+    if (heart1 === "Heart"){
+     this.heart++;
     }
+    return;
     //this.render();
   }
 
   removeHeart() {
     //debugger;
-  var attack= event.target.firstElementChild.innerText;
+  var attack= event.target.firstElementChild.innerHTML;
     if (attack === "Attack" ){
       this.heart-=1;
       console.log(this.heart);
@@ -102,9 +108,10 @@ class Monsters {
   }
 
   addStars() {
-    //debugger;
+    // debugger;
+    console.log('addStars ran');
     var star = event.target.firstElementChild.innerText;
-    this.stars=0;
+     this.stars=0;
     switch(star){
         case "1":
           this.stars+=1;

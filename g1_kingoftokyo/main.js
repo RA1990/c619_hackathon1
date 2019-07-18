@@ -1,8 +1,8 @@
 $(document).ready(initializeApp);
-var player1;
-var player2;
-var player3;
-var player4;
+// var player1;
+// var player2;
+// var player3;
+// var player4;
 var game = null;
 function initializeApp() {
   game = new KingOfTokyo();
@@ -197,7 +197,8 @@ class Monsters {
     this.domElements.stars.text(this.stars);
 
     if(this.stars > 5){
-      alert("win")
+      $(".modal-content").css("visibility", "visible");
+      $(".modal").css("display", "block");
     }
   }
 /*

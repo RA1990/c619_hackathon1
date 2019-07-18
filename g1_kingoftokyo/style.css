@@ -2,17 +2,16 @@ body{
 display: inline-block;
     height: 100vh;
     width: 100vw;
-    background-image: url("/Users/rauljauregui/lfz/c619_hackathon1/g1_kingoftokyo/images/Tokyo-Japan-Akihabara-neon-cityscape-destinations-1200x900.jpg");
-    background-size: 70%;
-    background-repeat: no-repeat;
-
-
+    background-image: url("images/Tokyo-Japan-Akihabara-neon-cityscape-destinations-1200x900.jpg");
+    padding: 0;
+    margin :0;
+    background-size: contain;
 }
 
 .start {
   height: 10%;
   width: 30%;
-  margin-left: 35%;
+  margin-left: 50%;
   background-color: #004A7F;
   -webkit-border-radius: 10px;
   border-radius: 10px;
@@ -76,18 +75,33 @@ display: inline-block;
     margin-top: 10%;
 
 }
+h1 {
+  font-size: 40px;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  color: darkorange;
+  font-family: cursive;
+
+}
 #gameContainer{
     height: 100%;
     width: 67%;
+    padding: 0;
+    margin: 0;
     display: inline-block;
     float: left;
     position: relative;
+    background-image: url("images/Tokyo-Japan-Akihabara-neon-cityscape-destinations-1200x900.jpg");
+    background-size: cover;
+    background-repeat: repeat;
 }
 #playerContainer{
     font-size: 48px;
-    border: 10px solid black;
     height: 100%;
-    width: 31%;
+    width: 33%;
+    margin-top: -1%;
+    margin-left: 0%;
     display: inline-block;
     float: right;
     color:darkorange;
@@ -101,7 +115,7 @@ display: inline-block;
 }
 .monster{
     border: 4px solid black;
-    height: 23%;
+    height: 25%;
    background-size:cover;
 }
 .stats{

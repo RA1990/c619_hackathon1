@@ -7,8 +7,28 @@ display: inline-block;
     margin :0;
     background-size: contain;
 }
+.m1,.m2,.m3,.m4{
+  border-radius: 50%;
+  background-size: cover;
+}
 
-.start {
+.m1{
+background-image: url("images/drakonis.jpg");
+}
+
+.m2{
+  background-image: url("images/gigazaur.jpg");
+}
+
+.m3{
+  background-image: url("images/cyberkitty.jpg");
+}
+
+.m4{
+  background-image: url("images/alienoid.jpg");
+}
+
+.start{
   height: 10%;
   width: 30%;
   margin-left: 50%;
@@ -52,36 +72,44 @@ display: inline-block;
   50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
   100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
 }
+.roll {
+  height: 20%;
+  width: 20%;
+  margin-top: 8%;
+  margin-left: 15%;
+  text-decoration: none;
+  color: orangered;
+  background:orangered;
+  padding: 15px 40px;
+  border-radius: 50%;
+  font-weight: normal;
+  text-transform: uppercase;
+  transition: all 0.5s ease-in-out;
+  font-size: 30px;
+  font-family: cursive,sans-serif;
+  border: 2px solid black;
+}
 
-.roll{
-    height: 20%;
-    width: 20%;
-    margin-top: 17%;
-    margin-left: 33%;
-    border-radius: 50%;
-    background-color: hotpink;
-    font-size: 30px;
-    font-family: cursive,sans-serif;
-    border: 2px solid black;
+.glow-button {
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0 5px 15px rgba(216, 150, 6, 0.4);
+}
 
-  }
 .tokyo{
-  border: 2px solid purple;
     height: 30%;
     width: 30%;
     border-radius: 50%;
-    background-color: aqua;
     margin-left: 10%;
     margin-top: 10%;
 
 }
 h1 {
-  font-size: 40px;
+  font-size: 50px;
   padding: 0;
   margin: 0;
   text-align: center;
   color: darkorange;
-  font-family: cursive;
+  font-family: cursive,sans-serif;
 
 }
 #gameContainer{
@@ -105,6 +133,7 @@ h1 {
     display: inline-block;
     float: right;
     color:darkorange;
+    font-family: cursive,sans-serif;
     position: absolute;
 }
 .monster1, .monster2, .monster3, .monster4{
@@ -180,8 +209,9 @@ h1 {
   width: 50%;
   height: 50%;
   margin-top: 11%;
-  margin-left: 39%;
+  margin-left: 20%;
   visibility: hidden;
+
 }
 .close {
     height: 40%;
@@ -194,6 +224,7 @@ h1 {
     border: 2px solid black;
     background-position: inherit;
     width: 39vw;
+
 }
 
 .close:hover,

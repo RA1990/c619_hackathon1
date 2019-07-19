@@ -14,7 +14,7 @@ class KingOfTokyo {
       new Monsters("CYBERKITTY", 'images/cyberkitty.jpg', this.handleMonsterDeath),
       new Monsters("ALIENOID", 'images/alienoid.jpg', this.handleMonsterDeath)
     ]
-    this.monstersArray = [".monster1", ".monster2", ".monster3", ".monster4"];
+    this.monstersArray = ["m1", "m2", "m3", "m4"];
     this.rollDice1 = [1, 2, 3, "Heart", "Attack"];
     $(".close").on("click",this.resetGame);
     this.addMonstersCounter =0;
@@ -26,8 +26,8 @@ class KingOfTokyo {
     this.resetGame = this.resetGame.bind(this);
     $(".start").on("click",this.startGame);
     $(".roll").on("click",this.rollDice);
-
   }
+
   resetGame(){
     $("#playerContainer").empty();
     $(".start").css("visibility", "visible");
@@ -66,7 +66,6 @@ class KingOfTokyo {
         this.playSound('sounds/heart.wav');
         break;
       case 'Attack':
-        debugger;
         this.damageMonsters(1, this.playerArray[this.currentMonsterCounter]);
         this.playSound('sounds/hit.wav');
         setTimeout( function(){
@@ -97,22 +96,22 @@ class KingOfTokyo {
       $("#playerContainer").append(domElement);
       this.playerArray[monsterIndex].update()
     }
-    $(".tokyo").text(this.monstersArray[0]);
+    $(".tokyo").addClass(this.monstersArray[0]);
   }
 
   moveMonstersToTokyo() {
+    var prevIndex = this.addMonstersCounter;
     this.addMonstersCounter++
     if (this.addMonstersCounter === this.playerArray.length) { this.addMonstersCounter = 0 };
-    $(".tokyo").text(this.monstersArray[this.addMonstersCounter]);
+      $(".tokyo").addClass(this.monstersArray[this.addMonstersCounter]);
+      $(".tokyo").removeClass(this.monstersArray[prevIndex]);
+
   }
 
   gotoNextMonster(){
     this.currentMonsterCounter++;
     if(this.currentMonsterCounter===this.playerArray.length){
       this.currentMonsterCounter = 0;
-    }
-    if(this.playerArray.length===1){
-      alert('last monster standing');
     }
   }
 
@@ -132,8 +131,8 @@ class Monsters {
     this.monstersName = name;
     this.image = image;
     this.stars = 0;
-    this.heart = 5;
-    this.maxHearts = 5;
+    this.heart = 10;
+    this.maxHearts = 10;
     this.deathCount=0;
     this.monsterPicture = null;
     this.addHeart=this.addHeart.bind(this);

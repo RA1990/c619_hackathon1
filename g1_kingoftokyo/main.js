@@ -90,6 +90,7 @@ class KingOfTokyo {
   }
 
   startGame() {
+    $(".roll").css("visibility", "visible");
     $(".start").css("visibility","hidden");
     for( var monsterIndex = 0; monsterIndex < this.playerArray.length; monsterIndex++){
       var domElement= this.playerArray[ monsterIndex ].render();

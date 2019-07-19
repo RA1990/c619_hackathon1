@@ -73,6 +73,7 @@ background-image: url("images/drakonis.jpg");
   100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
 }
 .roll {
+  visibility: hidden;
   height: 20%;
   width: 20%;
   margin-top: 8%;

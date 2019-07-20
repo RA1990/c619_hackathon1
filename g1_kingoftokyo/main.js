@@ -22,10 +22,33 @@ class KingOfTokyo {
     this.rollDice = this.rollDice.bind(this);
     this.startGame = this.startGame.bind(this);
     this.moveMonstersToTokyo = this.moveMonstersToTokyo.bind(this);
-    this.monstersStatRender = this.monstersStatRender.bind(this);
     this.resetGame = this.resetGame.bind(this);
+    this.currentMonsterModal =this.currentMonsterModal.bind(this);
     $(".start").on("click",this.startGame);
     $(".roll").on("click",this.rollDice);
+  }
+
+  currentMonsterModal(resultOfDiceRoll,currentMonster){
+    debugger;
+    var textToAppendToModal =null;
+    switch (resultOfDiceRoll) {
+      case 1:
+      case 2:
+      case 3:
+       textToAppendToModal = currentMonster.monstersName+" stars up by "+resultOfDiceRoll;
+        break;
+      case 'Heart':
+        textToAppendToModal = currentMonster.monstersName + " added 1 " + resultOfDiceRoll;
+        break;
+      case 'Attack':
+        textToAppendToModal = currentMonster.monstersName + " " + resultOfDiceRoll+ "s all monsters outside tokyo";
+    }
+    $(".overlay").css("display","block")
+    $(".modal2 > p").append(textToAppendToModal);
+    setTimeout(function(){
+      $(".overlay").hide();
+      $(".modal2 > p").empty();
+    },2000)
   }
 
   resetGame(){
@@ -33,6 +56,9 @@ class KingOfTokyo {
     $(".start").css("visibility", "visible");
     $(".modal-content").css("visibility","hidden");
     $(".modal").css("display","none");
+    $(".roll").hide();
+    debugger;
+    $("#gameContainer > div").removeClass("tokyo");
   }
 
   handleMonsterDeath( monster ){
@@ -54,6 +80,8 @@ class KingOfTokyo {
   }
 
   handleDiceResult(result){
+    debugger;
+    this.currentMonsterToPassToCurrentMonsterModal = this.playerArray[this.currentMonsterCounter];
     switch(result){
       case 1:
       case 2:
@@ -72,6 +100,7 @@ class KingOfTokyo {
           $('.takingDamage').removeClass('takingDamage');
         }, 500)
     }
+    this.currentMonsterModal(result,this.currentMonsterToPassToCurrentMonsterModal);
   }
 
   playSound( file ){
@@ -116,13 +145,6 @@ class KingOfTokyo {
     }
   }
 
-  monstersStatRender(){
-    if (this.currentMonsterCounter === this.players.length) { this.currentMonsterCounter = 0 };
-    var currentMonster = this.playerArray[this.currentMonsterCounter]
-    $(this.monstersArray[this.addMonstersCounter]).append(currentMonster.render(`${this.monstersArray[this.currentMonsterCounter]} div:nth-child(2)`));
-    this.currentMonsterCounter++;
-    return;
-  }
 }
 
 class Monsters {
@@ -131,7 +153,7 @@ class Monsters {
     this.callThisFunctionWhenIDie = deathCallback;
     this.monstersName = name;
     this.image = image;
-    this.stars = 0;
+    this.stars = 5;
     this.heart = 10;
     this.maxHearts = 10;
     this.deathCount=0;
@@ -182,8 +204,11 @@ class Monsters {
     this.domElements.stars.text(this.stars);
 
     if(this.stars > 5){
+      debugger;
       $(".modal-content").css("visibility", "visible");
       $(".modal").css("display", "block");
+      $(".close").css('background-image', 'url(' + this.image + ')')
+      $(".close").text(this.monstersName+" WINS");
       for(var i =0; i<=3; i++){
         game.playerArray[i].stars = 0;
       }

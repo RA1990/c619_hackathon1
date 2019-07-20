@@ -15,7 +15,7 @@ class KingOfTokyo {
       new Monsters("ALIENOID", 'images/alienoid.jpg', this.handleMonsterDeath)
     ]
     this.monstersArray = ["m1", "m2", "m3", "m4"];
-    this.rollDice1 = [1, 2, 3, "Heart", "Attack"];
+    this.rollDiceArray = [1, 2, 3, "Heart", "Attack"];
     $(".close").on("click",this.resetGame);
     this.addMonstersCounter =0;
     this.currentMonsterCounter=0;
@@ -48,17 +48,18 @@ class KingOfTokyo {
     setTimeout(function(){
       $(".overlay").hide();
       $(".modal2 > p").empty();
-    },2000)
+      this.moveMonstersToTokyo();
+    }.bind(this),1500)
   }
 
   resetGame(){
     $("#playerContainer").empty();
     $(".start").css("visibility", "visible");
-    $(".modal-content").css("visibility","hidden");
-    $(".modal").css("display","none");
-    $(".roll").hide();
-    debugger;
-    $("#gameContainer > div").removeClass("tokyo");
+    $(".modal-content").css("visibility", "hidden");
+    $(".modal").css("display", "none");
+    $(".roll").css("visibility", "hidden");
+    $("#tokyo").css("visibility", "hidden");
+    $(".dicevalue").text("");
   }
 
   handleMonsterDeath( monster ){
@@ -70,17 +71,16 @@ class KingOfTokyo {
   }
 
   rollDice() {
-    var randomNum = Math.floor(Math.random()*this.rollDice1.length);
-    var diceValue = this.rollDice1[randomNum];
+    var randomNum = Math.floor(Math.random()*this.rollDiceArray.length);
+    var diceValue = this.rollDiceArray[randomNum];
     $(".dicevalue").text( diceValue );
     this.handleDiceResult( diceValue );
     $(".dicevalue").append(this.diceValue);
     this.gotoNextMonster();
-    this.moveMonstersToTokyo();
+    //this.moveMonstersToTokyo();
   }
 
   handleDiceResult(result){
-    debugger;
     this.currentMonsterToPassToCurrentMonsterModal = this.playerArray[this.currentMonsterCounter];
     switch(result){
       case 1:
@@ -119,22 +119,26 @@ class KingOfTokyo {
   }
 
   startGame() {
+    debugger;
+    this.addMonstersCounter = 0;
     $(".roll").css("visibility", "visible");
-    $(".start").css("visibility","hidden");
+    $("#tokyo").css("visibility", "visible");
+    $(".start").css("visibility", "hidden");
     for( var monsterIndex = 0; monsterIndex < this.playerArray.length; monsterIndex++){
       var domElement= this.playerArray[ monsterIndex ].render();
       $("#playerContainer").append(domElement);
       this.playerArray[monsterIndex].update()
     }
-    $(".tokyo").addClass(this.monstersArray[0]);
+    $("#tokyo").addClass(this.monstersArray[0]);
   }
 
   moveMonstersToTokyo() {
+    debugger;
     var prevIndex = this.addMonstersCounter;
     this.addMonstersCounter++
     if (this.addMonstersCounter === this.playerArray.length) { this.addMonstersCounter = 0 };
-      $(".tokyo").addClass(this.monstersArray[this.addMonstersCounter]);
-      $(".tokyo").removeClass(this.monstersArray[prevIndex]);
+      $("#tokyo").addClass(this.monstersArray[this.addMonstersCounter]);
+      $("#tokyo").removeClass(this.monstersArray[prevIndex]);
 
   }
 
@@ -153,7 +157,7 @@ class Monsters {
     this.callThisFunctionWhenIDie = deathCallback;
     this.monstersName = name;
     this.image = image;
-    this.stars = 5;
+    this.stars = 0;
     this.heart = 10;
     this.maxHearts = 10;
     this.deathCount=0;
@@ -208,13 +212,15 @@ class Monsters {
       $(".modal-content").css("visibility", "visible");
       $(".modal").css("display", "block");
       $(".close").css('background-image', 'url(' + this.image + ')')
-      $(".close").text(this.monstersName+" WINS");
+      $(".close").text(this.monstersName+" WINS!! Play Again");
       for(var i =0; i<=3; i++){
         game.playerArray[i].stars = 0;
       }
       for (var j = 0; j <= 3; j++) {
-        game.playerArray[j].heart = 5;
+        game.playerArray[j].heart = 10;
       }
+      $("#tokyo").removeClass();
+
     }
   }
 

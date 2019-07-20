@@ -1,0 +1,247 @@
+body{
+    display: inline-block;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("images/Tokyo-Japan-Akihabara-neon-cityscape-destinations-1200x900.jpg");
+    background-size: 100%;
+    padding: 0;
+    margin :0;
+}
+.m1,.m2,.m3,.m4{
+  border-radius: 30%;
+  background-size: cover;
+  border: 2px solid red;
+}
+.m1{
+background-image: url("images/drakonis.jpg");
+}
+.m2{
+  background-image: url("images/gigazaur.jpg");
+}
+.m3{
+  background-image: url("images/cyberkitty.jpg");
+}
+.m4{
+  background-image: url("images/alienoid.jpg");
+}
+.start{
+  height: 10%;
+  width: 40%;
+  margin-left: 50%;
+  background-color: #004A7F;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Arial;
+  font-size: 25px;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+@-webkit-keyframes glowing {
+  0% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; -webkit-box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+}
+@-moz-keyframes glowing {
+  0% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; -moz-box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+}
+@-o-keyframes glowing {
+  0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+}
+@keyframes glowing {
+  0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+}
+.roll {
+  visibility: hidden;
+  height: 20%;
+  width: 20%;
+  margin-top: 8%;
+  margin-left: 15%;
+  text-decoration: none;
+  color: orangered;
+  background:orangered;
+  padding: 15px 40px;
+  border-radius: 50%;
+  font-weight: normal;
+  text-transform: uppercase;
+  transition: all 0.5s ease-in-out;
+  font-size: 25px;
+  font-family: cursive,sans-serif;
+  border: 2px solid black;
+}
+.glow-button {
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0 5px 15px rgba(216, 150, 6, 0.4);
+}
+#tokyo{
+    height: 30%;
+    width: 30%;
+    border-radius: 50%;
+    margin-left: 10%;
+    margin-top: 2%;
+}
+h1 {
+  font-size: 60px;
+  padding: 0;
+  margin: 0;
+  text-align: right;
+  color: greenyellow;
+  font-family: cursive,sans-serif;
+}
+#gameContainer{
+    height: 100%;
+    width: 67%;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    float: left;
+    position: relative;
+}
+#playerContainer{
+    font-size: 40px;
+    height: 100%;
+    width: 33%;
+    margin-top: -1%;
+    margin-left: 0%;
+    display: inline-block;
+    float: right;
+    color:greenyellow;
+    font-family: cursive,sans-serif;
+    position: absolute;
+}
+.monster1, .monster2, .monster3, .monster4{
+  color: darkorange;
+  font-weight: 400;
+  font-size: 48px;
+}
+.monster{
+    border: 4px solid black;
+    height: 25%;
+   background-size:cover;
+}
+.stats{
+    background-color: beige;
+    border: 2px solid red;
+    height: 31%;
+    width: 28%;
+    float: right;
+    font-size: 28px;
+    text-align: right;
+    color: black;
+}
+.heart{
+    border: 1px solid;
+    height: 48%;
+    background-image: url("images/heart.jpeg");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+.stars{
+    border: 1px solid;
+    height: 48%;
+    background-image: url("images/star-icon.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+.takingDamage{
+  animation-name: receiveAttack;
+  animation-duration: .1s;
+  animation-iteration-count: 4;
+}
+@keyframes receiveAttack{
+  from {
+    transform: rotateZ(-15deg);
+    filter: hue-rotate(90deg);
+  }
+  to: {
+    transform: rotateZ(15deg);
+    filter: hue-rotate(180deg);
+  }
+}
+.modal {
+  display:none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+.modal-content {
+  color: red;
+  text-align: center;
+  position: fixed;
+  width: 50%;
+  height: 50%;
+  margin-top: 11%;
+  margin-left: 20%;
+  visibility: hidden;
+}
+.close {
+    height: 110%;
+    width: 90%;
+    border: 2px solid red;
+    border-radius: 20%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+    position: absolute;
+    font-size: 40px;
+    right:9%;
+    top: 10%;
+}
+.close1 {
+    left: 40%;
+    height: 110%;
+    width: 70%;
+    font-size: 30px;
+    right:20%;
+    top: 50%;
+}
+.close:hover,
+.close:focus {
+  color: rgb(136, 32, 32);
+  text-decoration: none;
+  cursor:pointer;
+}
+.overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(94, 121, 111);
+    border-radius: 10px;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+.modal2{
+    float: right;
+    background-color:greenyellow;
+    border-radius: 10px;
+    text-align: center;
+    position: absolute;
+    font-size: 30px;
+    width:25%;
+    height:20%;
+    margin-left: 35%;
+    top: 40%
+}

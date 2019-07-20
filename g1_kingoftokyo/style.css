@@ -1,11 +1,12 @@
 body{
-display: inline-block;
+    display: inline-block;
     height: 100vh;
     width: 100vw;
     background-image: url("images/Tokyo-Japan-Akihabara-neon-cityscape-destinations-1200x900.jpg");
+    background-size: 100%;
     padding: 0;
     margin :0;
-    background-size: contain;
+   
 }
 .m1,.m2,.m3,.m4{
   border-radius: 50%;
@@ -31,7 +32,7 @@ background-image: url("images/drakonis.jpg");
 .start{
   height: 10%;
   width: 30%;
-  margin-left: 50%;
+  margin-left: 60%;
   background-color: #004A7F;
   -webkit-border-radius: 10px;
   border-radius: 10px;
@@ -108,7 +109,7 @@ h1 {
   font-size: 50px;
   padding: 0;
   margin: 0;
-  text-align: center;
+  text-align: right;
   color: darkorange;
   font-family: cursive,sans-serif;
 
@@ -121,9 +122,7 @@ h1 {
     display: inline-block;
     float: left;
     position: relative;
-    background-image: url("images/Tokyo-Japan-Akihabara-neon-cityscape-destinations-1200x900.jpg");
-    background-size: cover;
-    background-repeat: repeat;
+ 
 }
 #playerContainer{
     font-size: 48px;

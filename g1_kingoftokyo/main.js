@@ -9,11 +9,13 @@ class KingOfTokyo {
     this.volumeLevel = .7;
     this.handleMonsterDeath = this.handleMonsterDeath.bind(this);
     this.playerArray=[
-      new Monsters("DRAKONIS", 'images/drakonis.jpg', this.handleMonsterDeath),
-      new Monsters("GIGAZAUR", 'images/gigazaur.jpg', this.handleMonsterDeath),
-      new Monsters("CYBERKITTY", 'images/cyberkitty.jpg', this.handleMonsterDeath),
-      new Monsters("ALIENOID", 'images/alienoid.jpg', this.handleMonsterDeath)
-    ]
+      new Monsters("DRAKONIS", 'images/drakonis.jpg', this.handleMonsterDeath,this.returnDeadPlayer),
+      new Monsters("GIGAZAUR", 'images/gigazaur.jpg', this.handleMonsterDeath, this.returnDeadPlayer),
+      new Monsters("CYBERKITTY", 'images/cyberkitty.jpg', this.handleMonsterDeath, this.returnDeadPlayer),
+      new Monsters("ALIENOID", 'images/alienoid.jpg', this.handleMonsterDeath, this.returnDeadPlayer)
+    ];
+    this.playerArrayCounter=4;
+    this.deadPlayers = this.playerArray.length;
     this.monstersArray = ["m1", "m2", "m3", "m4"];
     this.rollDiceArray = [1, 2, 3, "Heart", "Attack"];
     $(".close").on("click",this.resetGame);
@@ -26,6 +28,10 @@ class KingOfTokyo {
     this.currentMonsterModal =this.currentMonsterModal.bind(this);
     $(".start").on("click",this.startGame);
     $(".roll").on("click",this.rollDice);
+  }
+
+  returnDeadPlayer(){
+    return this.playerArrayCounter;
   }
 
   currentMonsterModal(resultOfDiceRoll,currentMonster){
@@ -41,7 +47,7 @@ class KingOfTokyo {
         textToAppendToModal = currentMonster.monstersName + " added 1 " + resultOfDiceRoll;
         break;
       case 'Attack':
-        textToAppendToModal = currentMonster.monstersName + " " + resultOfDiceRoll+ "s all monsters outside tokyo";
+        textToAppendToModal = currentMonster.monstersName + " " + resultOfDiceRoll+ "s all monsters outside Tokyo";
     }
     $(".overlay").css("display","block")
     $(".modal2 > p").append(textToAppendToModal);
@@ -49,10 +55,11 @@ class KingOfTokyo {
       $(".overlay").hide();
       $(".modal2 > p").empty();
       this.moveMonstersToTokyo();
-    }.bind(this),1500)
+    }.bind(this),2000)
   }
 
   resetGame(){
+    $("#tokyo").removeClass();
     $("#playerContainer").empty();
     $(".start").css("visibility", "visible");
     $(".modal-content").css("visibility", "hidden");
@@ -68,6 +75,7 @@ class KingOfTokyo {
       console.error('could not find monster');
     }
     this.playerArray.splice(monsterIndex, 1);
+    this.playerArrayCounter -= 1;
   }
 
   rollDice() {
@@ -77,7 +85,6 @@ class KingOfTokyo {
     this.handleDiceResult( diceValue );
     $(".dicevalue").append(this.diceValue);
     this.gotoNextMonster();
-    //this.moveMonstersToTokyo();
   }
 
   handleDiceResult(result){
@@ -119,7 +126,13 @@ class KingOfTokyo {
   }
 
   startGame() {
-    debugger;
+    this.playerArray = [
+      new Monsters("DRAKONIS", 'images/drakonis.jpg', this.handleMonsterDeath, this.returnDeadPlayer),
+      new Monsters("GIGAZAUR", 'images/gigazaur.jpg', this.handleMonsterDeath, this.returnDeadPlayer),
+      new Monsters("CYBERKITTY", 'images/cyberkitty.jpg', this.handleMonsterDeath, this.returnDeadPlayer),
+      new Monsters("ALIENOID", 'images/alienoid.jpg', this.handleMonsterDeath, this.returnDeadPlayer)
+    ];
+    this.playerArrayCounter =4;
     this.addMonstersCounter = 0;
     $(".roll").css("visibility", "visible");
     $("#tokyo").css("visibility", "visible");
@@ -133,13 +146,11 @@ class KingOfTokyo {
   }
 
   moveMonstersToTokyo() {
-    debugger;
     var prevIndex = this.addMonstersCounter;
     this.addMonstersCounter++
     if (this.addMonstersCounter === this.playerArray.length) { this.addMonstersCounter = 0 };
       $("#tokyo").addClass(this.monstersArray[this.addMonstersCounter]);
       $("#tokyo").removeClass(this.monstersArray[prevIndex]);
-
   }
 
   gotoNextMonster(){
@@ -153,8 +164,13 @@ class KingOfTokyo {
 
 class Monsters {
 
-  constructor(name, image, deathCallback) {
+  constructor(name, image, deathCallback,MonstersThatAreDead) {
+    this.drakonisSound = new Audio("sounds/godzilla.wav");
+    this.cyberkittySound = new Audio("sounds/panthere.mp3");
+    this.gigazaurSound = new Audio("sounds/Creature Snarl 02.wav");
+    this.alienoidSound = new Audio("sounds/Alien Locusts Loop 01.wav");
     this.callThisFunctionWhenIDie = deathCallback;
+    this.monsterThatHaveBeenKilled = MonstersThatAreDead;
     this.monstersName = name;
     this.image = image;
     this.stars = 0;
@@ -175,6 +191,30 @@ class Monsters {
     }
   }
 
+  youWinIfEveryOneElseIsDead(monsterThatHaveBeenKilled){
+    var monstersThatAreDead = game.returnDeadPlayer();
+    if(monstersThatAreDead<2){
+      $(".modal-content").css("visibility", "visible");
+      $(".modal").css("display", "block");
+      $(".close").css('background-image', 'url(' + game.playerArray[0].image + ')');
+      $(".close").text(game.playerArray[0].monstersName + " WINS!! Play Again");
+      var monsterName = game.playerArray[0].monstersName;
+      switch (monsterName) {
+        case "DRAKONIS":
+          this.drakonisSound.play();
+          break;
+        case "GIGAZAUR":
+          this.gigazaurSound.play();
+          break;
+        case "CYBERKITTY":
+          this.cyberkittySound.play();
+          break;
+        case "ALIENOID":
+          this.alienoidSound.play();
+          break;
+      }
+    }
+  }
 
   addHeart(amount) {
     this.heart += amount;
@@ -206,18 +246,26 @@ class Monsters {
   update() {
     this.domElements.hearts.text(this.heart);
     this.domElements.stars.text(this.stars);
-
+    this.youWinIfEveryOneElseIsDead();
     if(this.stars > 5){
-      debugger;
       $(".modal-content").css("visibility", "visible");
       $(".modal").css("display", "block");
       $(".close").css('background-image', 'url(' + this.image + ')')
       $(".close").text(this.monstersName+" WINS!! Play Again");
-      for(var i =0; i<=3; i++){
-        game.playerArray[i].stars = 0;
-      }
-      for (var j = 0; j <= 3; j++) {
-        game.playerArray[j].heart = 10;
+      var monsterName = this.monstersName;
+      switch(monsterName){
+        case "DRAKONIS":
+          this.drakonisSound.play();
+          break;
+        case "GIGAZAUR":
+          this.gigazaurSound.play();
+          break;
+        case "CYBERKITTY":
+          this.cyberkittySound.play();
+          break;
+        case "ALIENOID":
+          this.alienoidSound.play();
+          break;
       }
       $("#tokyo").removeClass();
 

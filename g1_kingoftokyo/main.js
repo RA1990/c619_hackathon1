@@ -35,7 +35,6 @@ class KingOfTokyo {
   }
 
   currentMonsterModal(resultOfDiceRoll,currentMonster){
-    debugger;
     var textToAppendToModal =null;
     switch (resultOfDiceRoll) {
       case 1:
@@ -59,7 +58,7 @@ class KingOfTokyo {
   }
 
   resetGame(){
-    $("#tokyo").removeClass();
+    $("#tokyo").removeClass("m1 m2 m3 m4");
     $("#playerContainer").empty();
     $(".start").css("visibility", "visible");
     $(".modal-content").css("visibility", "hidden");
@@ -134,6 +133,7 @@ class KingOfTokyo {
     ];
     this.playerArrayCounter =4;
     this.addMonstersCounter = 0;
+    this.currentMonsterCounter=0;
     $(".roll").css("visibility", "visible");
     $("#tokyo").css("visibility", "visible");
     $(".start").css("visibility", "hidden");
@@ -164,7 +164,7 @@ class KingOfTokyo {
 
 class Monsters {
 
-  constructor(name, image, deathCallback,MonstersThatAreDead) {
+  constructor(name, image, deathCallback, MonstersThatAreDead) {
     this.drakonisSound = new Audio("sounds/godzilla.wav");
     this.cyberkittySound = new Audio("sounds/panthere.mp3");
     this.gigazaurSound = new Audio("sounds/Creature Snarl 02.wav");

@@ -167,7 +167,7 @@ h1 {
     transform: rotateZ(-15deg);
     filter: hue-rotate(90deg);
   }
-  to: {
+  to {
     transform: rotateZ(15deg);
     filter: hue-rotate(180deg);
   }
